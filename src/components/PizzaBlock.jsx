@@ -1,35 +1,40 @@
 import { useState } from 'react'
 
 const PizzaBlock = ({ id, imageUrl, types, title, sizes, price }) => {
-  const [addPizza, setAddPizza] = useState(0)
+  const [activeType, setActiveType] = useState(0)
+  const [activeSize, setActiveSize] = useState(0)
 
   const typesPizza = ['тонкое', 'традиционное']
 
-  const addPizzaCount = () => {
-    setAddPizza(addPizza + 1)
-  }
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {types.map((type) => (
-            <li>{typesPizza[type]}</li>
+          {types.map((type, i) => (
+            <li
+              onClick={() => setActiveType(i)}
+              className={activeType === i ? 'active' : ''}
+            >
+              {typesPizza[type]}
+            </li>
           ))}
         </ul>
         <ul>
-          {sizes.map((elem) => (
-            <li className="active">{elem} см.</li>
+          {sizes.map((elem, i) => (
+            <li
+              onClick={() => setActiveSize(i)}
+              className={activeSize === i ? 'active' : ''}
+            >
+              {elem} см.
+            </li>
           ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <button
-          onClick={addPizzaCount}
-          className="button button--outline button--add"
-        >
+        <button className="button button--outline button--add">
           <svg
             width="12"
             height="12"
@@ -43,7 +48,7 @@ const PizzaBlock = ({ id, imageUrl, types, title, sizes, price }) => {
             />
           </svg>
           <span>Добавить</span>
-          <i>{addPizza}</i>
+          <i>z</i>
         </button>
       </div>
     </div>
