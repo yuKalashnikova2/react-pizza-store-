@@ -20,7 +20,7 @@ const Categories = () => {
     <div className="categories">
       <ul>
         {categories.map((elem, index) => (
-          <li
+          <li key={index}
             onClick={() => choseActiveIndex(index)}
             className={activeIndex === index ? 'active' : ''}
           >
