@@ -4,7 +4,7 @@ import './scss/app.scss'
 import Header from './components/Header'
 import Categories from './components/Categories'
 import Sort from './components/Sort'
-import PizzaBlock from './components/PizzaBlock'
+import PizzaBlock from './components/PizzaBlock/PizzaBlock'
 
 
 function App() {
