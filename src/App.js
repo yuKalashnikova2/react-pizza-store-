@@ -13,8 +13,8 @@ function App() {
         <div className="content">
           <div className="container">
             <Routes>
-              <Route path='/' element={<Home />}/>
-              <Route path='*' element={<NotFound />}/>
+              <Route path="/" element={<Home />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
         </div>
