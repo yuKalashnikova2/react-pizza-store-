@@ -1,6 +1,6 @@
 .root {
     position: relative;
-    left: -120px;
+    left: -90px;
 }
 
 .input {
@@ -22,4 +22,18 @@
     position: absolute;
     top: 15px;
     left: 10px
+}
+
+.clearIcon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.3;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.7;
+    }
 }
