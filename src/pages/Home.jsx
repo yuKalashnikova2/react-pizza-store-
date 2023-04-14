@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
 import Categories from '../components/Categories'
 import Sort from '../components/Sort'
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
+import { SearchContext } from '../App'
 
-const Home = ({searchInput}) => {
+const Home = () => {
+  const {searchInput} = useContext(SearchContext)
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
