@@ -14,7 +14,6 @@ function App() {
 
 
 
-  console.log(searchInput, 'INPUT CAHNGED')
   return (
     <div className="wrapper">
       <SearchContext.Provider value={{ searchInput, setSearchInput }}>
