@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCategoryId } from '../redux/slices/sliceFilter'
+import axios from 'axios'
 
 import Categories from '../components/Categories'
 import Sort from '../components/Sort'
@@ -22,14 +23,14 @@ const Home = () => {
 
     const order = sortType.includes('-') ? 'asc' : 'desc'
     const search = searchInput ? `&search=${searchInput}` : ''
-    fetch(
-      `https://64340e691c5ed06c958de2ee.mockapi.io/items?${
-        categoryId > 0 ? `category=${categoryId}` : ''
-      }&sortBy=${sortType.replace('-', '')}&order=${order}${search}`
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        setItems(json)
+    axios
+      .get(
+        `https://64340e691c5ed06c958de2ee.mockapi.io/items?${
+          categoryId > 0 ? `category=${categoryId}` : ''
+        }&sortBy=${sortType.replace('-', '')}&order=${order}${search}`
+      )
+      .then((res) => {
+        setItems(res.data)
         setIsLoading(false)
       })
     window.scrollTo(0, 0)
