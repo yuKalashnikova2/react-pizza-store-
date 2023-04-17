@@ -12,10 +12,11 @@ export const SearchContext = createContext('')
 function App() {
   const [searchInput, setSearchInput] = useState('')
 
-
-
   return (
+
     <div className="wrapper">
+
+
       <SearchContext.Provider value={{ searchInput, setSearchInput }}>
         <Header />
         <div className="content">
