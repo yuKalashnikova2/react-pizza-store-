@@ -1,4 +1,4 @@
-const CartItem = ({ id, title, type, price, count, imageUrl }) => {
+const CartItem = ({ id, title, types, price, count, imageUrl }) => {
   return (
     <div className="cart__item">
       <div className="cart__item-img">
@@ -6,7 +6,7 @@ const CartItem = ({ id, title, type, price, count, imageUrl }) => {
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>
-        <p>{type}, 26 см.</p>
+        <p>{types}, 26 см.</p>
       </div>
       <div className="cart__item-count">
         <div className="button button--outline button--circle cart__item-count-minus">
