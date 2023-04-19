@@ -1,8 +1,17 @@
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import CartItem from '../components/CartItem'
+import { clearItems } from '../redux/slices/sliceCart'
 
 const Cart = () => {
+  const dispatch = useDispatch()
+
+  const onClickClearCart = () => {
+    if (window.confirm('Очистить корзину?')) {
+      dispatch(clearItems())
+    }
+  }
+
   const items = useSelector((store) => store.cart.items)
   return (
     <div className="container container--card">
@@ -40,7 +49,7 @@ const Cart = () => {
             </svg>
             Корзина
           </h2>
-          <div className="cart__clear">
+          <div onClick={onClickClearCart} className="cart__clear">
             <svg
               width="20"
               height="20"
