@@ -24,12 +24,10 @@ const Sort = () => {
   }
 
   useEffect(() => {
-    console.log('sort mount')
     const handleClickOutside = (event) => {
       let path = event.path || (event.composedPath && event.composedPath())
       if (!path.includes(sortRef.current)) {
         setActiveVisiblePopup(false)
-        console.log('sort OUTSIDE')
       }
     }
     document.body.addEventListener('click', handleClickOutside)
