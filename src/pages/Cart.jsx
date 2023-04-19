@@ -5,6 +5,9 @@ import { clearItems } from '../redux/slices/sliceCart'
 
 const Cart = () => {
   const dispatch = useDispatch()
+  const { totalPrice, items } = useSelector((store) => store.cart)
+
+  const totalCount = items.reduce((sum, item) => sum + item.count, 0)
 
   const onClickClearCart = () => {
     if (window.confirm('Очистить корзину?')) {
@@ -12,7 +15,6 @@ const Cart = () => {
     }
   }
 
-  const items = useSelector((store) => store.cart.items)
   return (
     <div className="container container--card">
       <div className="cart">
@@ -98,12 +100,10 @@ const Cart = () => {
         <div className="cart__bottom">
           <div className="cart__bottom-details">
             <span>
-              {' '}
-              Всего пицц: <b>3 шт.</b>{' '}
+              Всего пицц: <b>{totalCount} шт.</b>{' '}
             </span>
             <span>
-              {' '}
-              Сумма заказа: <b>900 ₽</b>{' '}
+              Сумма заказа: <b>{totalPrice} ₽</b>{' '}
             </span>
           </div>
           <div className="cart__bottom-buttons">
