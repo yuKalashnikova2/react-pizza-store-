@@ -33,6 +33,11 @@ const Home = () => {
         setItems(res.data)
         setIsLoading(false)
       })
+      .catch((error) => {
+        setIsLoading(false)
+        alert('ОШИБКА ПРИ ПОЛУЧЕНИИ ПИЦЦЫ! Пожалуйста, повторите попытку')
+        console.log('ERROR AXIOS', error)
+      })
     window.scrollTo(0, 0)
   }, [categoryId, sortType, searchInput])
 
