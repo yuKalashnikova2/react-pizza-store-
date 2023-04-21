@@ -21,13 +21,13 @@ const Home = () => {
   useEffect(() => {
     setIsLoading(true)
 
+    const sortBy = sortType.replace('-', '')
     const order = sortType.includes('-') ? 'asc' : 'desc'
+    const category = categoryId > 0 ? `category=${categoryId}` : ''
     const search = searchInput ? `&search=${searchInput}` : ''
     axios
       .get(
-        `https://64340e691c5ed06c958de2ee.mockapi.io/items?${
-          categoryId > 0 ? `category=${categoryId}` : ''
-        }&sortBy=${sortType.replace('-', '')}&order=${order}${search}`
+        `https://64340e691c5ed06c958de2ee.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search}`
       )
       .then((res) => {
         setItems(res.data)
