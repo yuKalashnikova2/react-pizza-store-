@@ -1,18 +1,20 @@
 .root {
     position: relative;
-    left: -90px;
 }
 
 .input {
     border: 1px solid rgba(0,0,0,0.1);
     padding: 12px 40px;
-    width: 400px;
     border-radius: 10px;
     font-size: 18px;
 
     &:focus {
         border: 1px solid rgba(0,0,0,0.2);
 }
+
+    @media(min-width: 1125px) {
+        width: 425px;
+    }
 }
 
 .icon {

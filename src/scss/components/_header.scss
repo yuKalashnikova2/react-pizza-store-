@@ -9,11 +9,12 @@
     align-items: center;
     justify-content: space-between;
 
-    @media (max-width: 654px) {
+    @media (max-width: 900px) {
       flex-direction: column;
+      gap: 10px;
 
       .header__cart {
-        margin-top: 30px;
+        margin-top: 15px;
       }
     }
   }
