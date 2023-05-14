@@ -2,6 +2,15 @@ import { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setSort } from '../redux/slices/sliceFilter'
 
+export const list = [
+  { name: 'популярности(по убыванию)', sortProperty: 'rating' },
+  { name: 'популярности (по возрастанию)', sortProperty: '-rating' },
+  { name: 'цене(по убыванию)', sortProperty: 'price' },
+  { name: 'цене(по возрастанию)', sortProperty: '-price' },
+  { name: 'алфавиту(по убыванию)', sortProperty: 'title' },
+  { name: 'алфавиту(по возрастанию)', sortProperty: '-title' },
+]
+
 const Sort = () => {
   const dispatch = useDispatch()
   const sort = useSelector((store) => store.filter.sort)
@@ -9,14 +18,7 @@ const Sort = () => {
 
   const [activeVisiblePopup, setActiveVisiblePopup] = useState(false)
 
-  const list = [
-    { name: 'популярности(по убыванию)', sortProperty: 'rating' },
-    { name: 'популярности (по возрастанию)', sortProperty: '-rating' },
-    { name: 'цене(по убыванию)', sortProperty: 'price' },
-    { name: 'цене(по возрастанию)', sortProperty: '-price' },
-    { name: 'алфавиту(по убыванию)', sortProperty: 'title' },
-    { name: 'алфавиту(по возрастанию)', sortProperty: '-title' },
-  ]
+
 
   const onSelectedClick = (obj) => {
     dispatch(setSort(obj))

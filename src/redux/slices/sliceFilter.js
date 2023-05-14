@@ -22,9 +22,15 @@ export const sliceFilter = createSlice({
     setCurrentPage(state, action) {
       state.currentPage = action.payload
     },
+    setFilters(state, action) {
+      state.currentPage = Number(action.payload.currentPage)
+      state.sort = action.payload.sort
+      state.categoryId = Number(action.payload.categoryId)
+    },
   },
 })
 
-export const { setCategoryId, setSort, setCurrentPage } = sliceFilter.actions
+export const { setCategoryId, setSort, setCurrentPage, setFilters } =
+  sliceFilter.actions
 
 export default sliceFilter.reducer

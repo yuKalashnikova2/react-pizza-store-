@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setCategoryId, setCurrentPage } from '../redux/slices/sliceFilter'
+import { useNavigate } from 'react-router-dom'
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/sliceFilter'
 import axios from 'axios'
 import qs from 'qs'
 
 import Categories from '../components/Categories'
-import Sort from '../components/Sort'
+import Sort, { list } from '../components/Sort'
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 import Pagination from '../components/Pagination/Pagination'
@@ -13,7 +14,9 @@ import { SearchContext } from '../App'
 import Search from '../components/Search/Search'
 
 const Home = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+
   const { categoryId, sort, currentPage } = useSelector((store) => store.filter)
   const sortType = sort.sortProperty
 
@@ -22,10 +25,25 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    if(window.location.search) {
+      const params = qs.parse(window.location.search.substring(1))
+      const sort = list.find((obj) => obj.sortProperty === params.sortProperty)
+
+      dispatch(
+        setFilters({
+          ...params,
+          sort
+        })
+      )
+    }
+  }, [])
+
+
+  useEffect(() => {
     setIsLoading(true)
 
-    const sortBy = sortType.replace('-', '')
-    const order = sortType.includes('-') ? 'asc' : 'desc'
+    const sortBy = sort.sortProperty.replace('-', '')
+    const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     const search = searchInput ? `&search=${searchInput}` : ''
     axios
@@ -42,7 +60,7 @@ const Home = () => {
         console.log('ERROR AXIOS', error)
       })
     window.scrollTo(0, 0)
-  }, [categoryId, sortType, searchInput, currentPage])
+  }, [categoryId, sort.sortProperty, searchInput, currentPage])
 
   useEffect(() => {
     const queryString = qs.stringify({
@@ -50,7 +68,7 @@ const Home = () => {
       categoryId,
       currentPage,
     })
-    console.log(queryString)
+    navigate(`?${queryString}`)
   }, [categoryId, sort.sortProperty, currentPage])
 
   const onChangeCategory = (id) => {
