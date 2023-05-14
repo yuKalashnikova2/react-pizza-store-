@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCategoryId, setCurrentPage } from '../redux/slices/sliceFilter'
 import axios from 'axios'
+import qs from 'qs'
 
 import Categories from '../components/Categories'
 import Sort from '../components/Sort'
@@ -42,6 +43,15 @@ const Home = () => {
       })
     window.scrollTo(0, 0)
   }, [categoryId, sortType, searchInput, currentPage])
+
+  useEffect(() => {
+    const queryString = qs.stringify({
+      sortProperty: sort.sortProperty,
+      categoryId,
+      currentPage,
+    })
+    console.log(queryString)
+  }, [categoryId, sort.sortProperty, currentPage])
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id))
