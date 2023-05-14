@@ -28,6 +28,19 @@ body {
     margin: 35px 0;
   }
 
+  &__main {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    @media (max-width: 576px) {
+      justify-content: center;
+    }
+
+  }
+
   &__items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
