@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/sliceFilter'
@@ -16,30 +16,25 @@ import Search from '../components/Search/Search'
 const Home = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const isSearch = useRef(false)
+  const isMounted = useRef(false)
 
   const { categoryId, sort, currentPage } = useSelector((store) => store.filter)
-  const sortType = sort.sortProperty
+
 
   const { searchInput } = useContext(SearchContext)
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    if(window.location.search) {
-      const params = qs.parse(window.location.search.substring(1))
-      const sort = list.find((obj) => obj.sortProperty === params.sortProperty)
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryId(id))
+  }
 
-      dispatch(
-        setFilters({
-          ...params,
-          sort
-        })
-      )
-    }
-  }, [])
+  const onChangePage = (number) => {
+    dispatch(setCurrentPage(number))
+  }
 
-
-  useEffect(() => {
+  const fetchPizza = () => {
     setIsLoading(true)
 
     const sortBy = sort.sortProperty.replace('-', '')
@@ -59,25 +54,55 @@ const Home = () => {
         alert('ОШИБКА ПРИ ПОЛУЧЕНИИ ПИЦЦЫ! Пожалуйста, повторите попытку')
         console.log('ERROR AXIOS', error)
       })
-    window.scrollTo(0, 0)
-  }, [categoryId, sort.sortProperty, searchInput, currentPage])
+  
+  }   
 
   useEffect(() => {
-    const queryString = qs.stringify({
-      sortProperty: sort.sortProperty,
-      categoryId,
-      currentPage,
-    })
-    navigate(`?${queryString}`)
+ 
+    if(isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sort.sortProperty,
+        categoryId,
+        currentPage,
+      })
+      navigate(`?${queryString}`)
+    }
+    isMounted.current = true
   }, [categoryId, sort.sortProperty, currentPage])
 
-  const onChangeCategory = (id) => {
-    dispatch(setCategoryId(id))
-  }
+  useEffect(() => {
+    if(window.location.search) {
+      const params = qs.parse(window.location.search.substring(1))
+      const sort = list.find((obj) => obj.sortProperty === params.sortProperty)
 
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number))
-  }
+      dispatch(
+        setFilters({
+          ...params,
+          sort
+        })
+      )
+      isSearch.current = true
+    }
+  }, [])
+
+
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+
+    if(!isSearch.current) {
+      fetchPizza()
+    }
+   
+    
+
+    isSearch.current = false
+
+  }, [categoryId, sort.sortProperty, searchInput, currentPage])
+
+
+
+
 
   return (
     <div className="container">
