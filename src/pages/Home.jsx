@@ -1,7 +1,12 @@
 import { useState, useEffect, useContext, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/sliceFilter'
+import {
+  setCategoryId,
+  setCurrentPage,
+  setFilters,
+} from '../redux/slices/sliceFilter'
+import { setItems } from '../redux/slices/slicePizza'
 import axios from 'axios'
 import qs from 'qs'
 
@@ -20,10 +25,9 @@ const Home = () => {
   const isMounted = useRef(false)
 
   const { categoryId, sort, currentPage } = useSelector((store) => store.filter)
-
+  const items = useSelector((store) => store.pizza.items)
 
   const { searchInput } = useContext(SearchContext)
-  const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   const onChangeCategory = (id) => {
@@ -46,7 +50,7 @@ const Home = () => {
         `https://64340e691c5ed06c958de2ee.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
       )
       .then((res) => {
-        setItems(res.data)
+        dispatch(setItems(res.data))
         setIsLoading(false)
       })
       .catch((error) => {
@@ -54,12 +58,10 @@ const Home = () => {
         alert('ОШИБКА ПРИ ПОЛУЧЕНИИ ПИЦЦЫ! Пожалуйста, повторите попытку')
         console.log('ERROR AXIOS', error)
       })
-  
-  }   
+  }
 
   useEffect(() => {
- 
-    if(isMounted.current) {
+    if (isMounted.current) {
       const queryString = qs.stringify({
         sortProperty: sort.sortProperty,
         categoryId,
@@ -71,38 +73,29 @@ const Home = () => {
   }, [categoryId, sort.sortProperty, currentPage])
 
   useEffect(() => {
-    if(window.location.search) {
+    if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1))
       const sort = list.find((obj) => obj.sortProperty === params.sortProperty)
 
       dispatch(
         setFilters({
           ...params,
-          sort
+          sort,
         })
       )
       isSearch.current = true
     }
   }, [])
 
-
-
   useEffect(() => {
     window.scrollTo(0, 0)
 
-    if(!isSearch.current) {
+    if (!isSearch.current) {
       fetchPizza()
     }
-   
-    
 
     isSearch.current = false
-
   }, [categoryId, sort.sortProperty, searchInput, currentPage])
-
-
-
-
 
   return (
     <div className="container">
