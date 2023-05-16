@@ -38,26 +38,28 @@ const Home = () => {
     dispatch(setCurrentPage(number))
   }
 
-  const fetchPizza = () => {
+  const fetchPizza = async () => {
+    console.log('функция запустилась')
     setIsLoading(true)
 
     const sortBy = sort.sortProperty.replace('-', '')
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     const search = searchInput ? `&search=${searchInput}` : ''
-    axios
-      .get(
+
+    try {
+      const { data } = await axios.get(
         `https://64340e691c5ed06c958de2ee.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
       )
-      .then((res) => {
-        dispatch(setItems(res.data))
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        setIsLoading(false)
-        alert('ОШИБКА ПРИ ПОЛУЧЕНИИ ПИЦЦЫ! Пожалуйста, повторите попытку')
-        console.log('ERROR AXIOS', error)
-      })
+      console.log('перед диспатчем')
+      dispatch(setItems(data))
+      console.log('получили данные')
+    } catch (error) {
+      console.log(error)
+      alert(error.message)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
