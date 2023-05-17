@@ -102,7 +102,20 @@ const Home = () => {
         <Search />
       </div>
 
-      <div className="content__items">
+      {status === 'error' ? (
+        <div className='cart--empty'>
+        <h2>
+        Произошла ошибка<icon>😕</icon>
+      </h2>
+      <p>
+        Не удалось получить пиццы
+        <br />
+        Попробуйте перезагрузить страницу
+      </p>
+      </div>) : 
+
+
+     ( <div className="content__items">
         {status === 'loading'
           ? [...new Array(9)].map((_, index) => <Skeleton key={index} />)
           : items
@@ -115,8 +128,8 @@ const Home = () => {
                 return false
               })
               .map((obj, index) => <PizzaBlock key={index} {...obj} />)}
-      </div>
-
+      </div>)
+      }
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   )
