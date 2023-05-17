@@ -5,8 +5,9 @@ import {
   setCategoryId,
   setCurrentPage,
   setFilters,
+  selectFilter
 } from '../redux/slices/sliceFilter'
-import { fetchPizza } from '../redux/slices/slicePizza'
+import { fetchPizza, selectPizza } from '../redux/slices/slicePizza'
 import qs from 'qs'
 
 import Categories from '../components/Categories'
@@ -23,8 +24,8 @@ const Home = () => {
   const isSearch = useRef(false)
   const isMounted = useRef(false)
 
-  const { categoryId, sort, currentPage } = useSelector((store) => store.filter)
-  const { items, status } = useSelector((store) => store.pizza)
+  const { categoryId, sort, currentPage } = useSelector(selectFilter)
+  const { items, status } = useSelector(selectPizza)
 
   const { searchInput } = useContext(SearchContext)
 

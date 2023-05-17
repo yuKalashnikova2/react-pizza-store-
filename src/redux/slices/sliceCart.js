@@ -35,6 +35,10 @@ export const sliceCart = createSlice({
     },
   },
 })
+export const selectCart = (store) => store.cart ;
+
+export const selectCartItemById = (id) => (store) => store.cart.items.find(obj => obj.id === id)
+
 
 export const { addItem, removeItem, minusItem, clearItems } = sliceCart.actions
 

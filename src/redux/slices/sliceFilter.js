@@ -30,6 +30,9 @@ export const sliceFilter = createSlice({
   },
 })
 
+export const selectFilter = (store) => store.filter
+
+export const selectSort = (store) => store.filter.sort
 export const { setCategoryId, setSort, setCurrentPage, setFilters } =
   sliceFilter.actions
 

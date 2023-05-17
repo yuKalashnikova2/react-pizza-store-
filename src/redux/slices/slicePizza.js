@@ -40,6 +40,8 @@ export const slicePizza = createSlice({
   },
 })
 
+export const selectPizza = (store) => store.pizza
+
 export const { setItems } = slicePizza.actions
 
 export default slicePizza.reducer
