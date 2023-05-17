@@ -1,11 +1,11 @@
-import { useEffect, useContext, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {
   setCategoryId,
   setCurrentPage,
   setFilters,
-  selectFilter
+  selectFilter,
 } from '../redux/slices/sliceFilter'
 import { fetchPizza, selectPizza } from '../redux/slices/slicePizza'
 import qs from 'qs'
@@ -15,7 +15,6 @@ import Sort, { list } from '../components/Sort'
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 import Pagination from '../components/Pagination/Pagination'
-import { SearchContext } from '../App'
 import Search from '../components/Search/Search'
 
 const Home = () => {
@@ -24,10 +23,9 @@ const Home = () => {
   const isSearch = useRef(false)
   const isMounted = useRef(false)
 
-  const { categoryId, sort, currentPage } = useSelector(selectFilter)
+  const { categoryId, sort, currentPage, searchInput } =
+    useSelector(selectFilter)
   const { items, status } = useSelector(selectPizza)
-
-  const { searchInput } = useContext(SearchContext)
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id))
@@ -64,7 +62,7 @@ const Home = () => {
       navigate(`?${queryString}`)
     }
     isMounted.current = true
-  }, [categoryId, sort.sortProperty, currentPage])
+  }, [categoryId, sort.sortProperty, currentPage, navigate])
 
   useEffect(() => {
     if (window.location.search) {
@@ -104,33 +102,32 @@ const Home = () => {
       </div>
 
       {status === 'error' ? (
-        <div className='cart--empty'>
-        <h2>
-        Произошла ошибка<icon>😕</icon>
-      </h2>
-      <p>
-        Не удалось получить пиццы
-        <br />
-        Попробуйте перезагрузить страницу
-      </p>
-      </div>) : 
-
-
-     ( <div className="content__items">
-        {status === 'loading'
-          ? [...new Array(9)].map((_, index) => <Skeleton key={index} />)
-          : items
-              .filter((obj) => {
-                if (
-                  obj.title.toLowerCase().includes(searchInput.toLowerCase())
-                ) {
-                  return true
-                }
-                return false
-              })
-              .map((obj, index) => <PizzaBlock key={index} {...obj} />)}
-      </div>)
-      }
+        <div className="cart--empty">
+          <h2>
+            Произошла ошибка<icon>😕</icon>
+          </h2>
+          <p>
+            Не удалось получить пиццы
+            <br />
+            Попробуйте перезагрузить страницу
+          </p>
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === 'loading'
+            ? [...new Array(9)].map((_, index) => <Skeleton key={index} />)
+            : items
+                .filter((obj) => {
+                  if (
+                    obj.title.toLowerCase().includes(searchInput.toLowerCase())
+                  ) {
+                    return true
+                  }
+                  return false
+                })
+                .map((obj, index) => <PizzaBlock key={index} {...obj} />)}
+        </div>
+      )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   )

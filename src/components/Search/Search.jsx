@@ -1,30 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useContext, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import debounce from 'lodash.debounce'
 import styles from './Search.module.scss'
-import { SearchContext } from '../../App'
+import { useDispatch } from 'react-redux'
+import { setSearchInput } from '../../redux/slices/sliceFilter'
 
 const Search = () => {
+  const dispatch = useDispatch()
   const [value, setValue] = useState('')
-  const { setSearchInput } = useContext(SearchContext)
   const inputRef = useRef()
 
   const onClickClear = () => {
-    setSearchInput('')
+    dispatch(setSearchInput(''))
     setValue('')
     inputRef.current.focus()
   }
 
-  const updateSearchValue = useCallback(
+  const updatesearchInput = useCallback(
     debounce((str) => {
-      setSearchInput(str)
+      dispatch(setSearchInput(str))
       console.log(str)
     }, 500),
     []
   )
   const onChangeInput = (e) => {
     setValue(e.target.value)
-    updateSearchValue(e.target.value)
+    updatesearchInput(e.target.value)
   }
   return (
     <div className={styles.root}>
