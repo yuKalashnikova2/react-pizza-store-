@@ -17,7 +17,7 @@ import Skeleton from '../components/PizzaBlock/Skeleton'
 import Pagination from '../components/Pagination/Pagination'
 import Search from '../components/Search/Search'
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const isSearch = useRef(false)
@@ -27,11 +27,11 @@ const Home = () => {
     useSelector(selectFilter)
   const { items, status } = useSelector(selectPizza)
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategoryId(id))
   }
 
-  const onChangePage = (number) => {
+  const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number))
   }
 
@@ -42,6 +42,7 @@ const Home = () => {
     const search = searchInput ? `&search=${searchInput}` : ''
 
     dispatch(
+      // @ts-ignore
       fetchPizza({
         sortBy,
         order,
@@ -104,7 +105,7 @@ const Home = () => {
       {status === 'error' ? (
         <div className="cart--empty">
           <h2>
-            Произошла ошибка<icon>😕</icon>
+            Произошла ошибка<span>😕</span>
           </h2>
           <p>
             Не удалось получить пиццы
@@ -117,7 +118,7 @@ const Home = () => {
           {status === 'loading'
             ? [...new Array(9)].map((_, index) => <Skeleton key={index} />)
             : items
-                .filter((obj) => {
+                .filter((obj: any) => {
                   if (
                     obj.title.toLowerCase().includes(searchInput.toLowerCase())
                   ) {
@@ -125,7 +126,7 @@ const Home = () => {
                   }
                   return false
                 })
-                .map((obj, index) => <PizzaBlock key={index} {...obj} />)}
+                .map((obj: any, index: number) => <PizzaBlock key={index} {...obj} />)}
         </div>
       )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
