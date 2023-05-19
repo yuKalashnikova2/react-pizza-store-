@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setSort, selectSort} from '../redux/slices/sliceFilter'
 
-export const list = [
+type listItem = {
+  name: string;
+  sortProperty: string;
+}
+
+export const list: listItem[] = [
   { name: 'популярности(по убыванию)', sortProperty: 'rating' },
   { name: 'популярности (по возрастанию)', sortProperty: '-rating' },
   { name: 'цене(по убыванию)', sortProperty: 'price' },
@@ -14,19 +19,19 @@ export const list = [
 const Sort = () => {
   const dispatch = useDispatch()
   const sort = useSelector(selectSort)
-  const sortRef = useRef()
+  const sortRef = useRef<HTMLDivElement>(null)
 
   const [activeVisiblePopup, setActiveVisiblePopup] = useState(false)
 
 
 
-  const onSelectedClick = (obj) => {
+  const onSelectedClick = (obj: listItem) => {
     dispatch(setSort(obj))
     setActiveVisiblePopup(false)
   }
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       let path = event.path || (event.composedPath && event.composedPath())
       if (!path.includes(sortRef.current)) {
         setActiveVisiblePopup(false)
@@ -39,7 +44,6 @@ const Sort = () => {
     }
   }, [])
 
-  // console.log(sortRef)
 
   return (
     <div ref={sortRef} className="sort">
