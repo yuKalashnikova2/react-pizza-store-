@@ -1,4 +1,10 @@
-const Categories = ({ value, onClickCategory }) => {
+
+type CategoriesProps = {
+  value: number,
+  onClickCategory: any
+}
+
+const Categories: React.FC<CategoriesProps> = ({ value, onClickCategory }) => {
   const categories = [
     'Все',
     'Мясные',
