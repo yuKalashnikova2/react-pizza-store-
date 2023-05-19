@@ -16,7 +16,7 @@ export const list: listItem[] = [
   { name: 'алфавиту(по возрастанию)', sortProperty: '-title' },
 ]
 
-const Sort = () => {
+const Sort: React.FC = () => {
   const dispatch = useDispatch()
   const sort = useSelector(selectSort)
   const sortRef = useRef<HTMLDivElement>(null)
