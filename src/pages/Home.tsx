@@ -85,7 +85,7 @@ const Home: React.FC = () => {
 
     if (!isSearch.current) {
       getPizza()
-      console.log(getPizza())
+
     }
 
     isSearch.current = false

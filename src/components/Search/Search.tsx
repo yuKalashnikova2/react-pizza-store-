@@ -19,7 +19,7 @@ const Search: React.FC = () => {
   const updatesearchInput = useCallback(
     debounce((str: string) => {
       dispatch(setSearchInput(str))
-      console.log(str)
+
     }, 500),
     []
   )
