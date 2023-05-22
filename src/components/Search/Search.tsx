@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useRef, useState } from 'react'
+import { ChangeEvent, useCallback, useRef, useState } from 'react'
 import debounce from 'lodash.debounce'
 import styles from './Search.module.scss'
 import { useDispatch } from 'react-redux'
@@ -23,7 +23,7 @@ const Search: React.FC = () => {
     }, 500),
     []
   )
-  const onChangeInput = (e: any) => {
+  const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
     updatesearchInput(e.target.value)
   }
