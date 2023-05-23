@@ -1,8 +1,6 @@
-# Описание
+# Описание: Магазин пиццы
 
-## Магазин пиццы
-
-# Технологии:
+## Технологии:
 
 - **ReactJS 18**
 - **TypeScript**
@@ -11,8 +9,8 @@
 - **Axios + Fetch** 
 - **React Hooks** 
 - **Prettier** 
-- CSS-Modules / SCSS 
-- React Content Loader 
-- React Pagination
-- Lodash.Debounce
+- **CSS-Modules / SCSS**
+- **React Content Loader** 
+- **React Pagination**
+- **Lodash.Debounce**
 
