@@ -7,6 +7,7 @@ import {
   setFilters,
   selectFilter,
 } from '../redux/slices/sliceFilter'
+import { useAppDispatch } from '../redux/store'
 import { fetchPizza, selectPizza } from '../redux/slices/slicePizza'
 import qs from 'qs'
 
@@ -19,7 +20,7 @@ import Search from '../components/Search/Search'
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const isSearch = useRef(false)
   const isMounted = useRef(false)
 
@@ -42,7 +43,6 @@ const Home: React.FC = () => {
     const search = searchInput ? `&search=${searchInput}` : ''
 
     dispatch(
-      // @ts-ignore
       fetchPizza({
         sortBy,
         order,
