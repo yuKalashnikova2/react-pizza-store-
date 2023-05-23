@@ -26,6 +26,7 @@ const Sort: React.FC = () => {
 
 
   const onSelectedClick = (obj: listItem) => {
+    //@ts-ignore
     dispatch(setSort(obj))
     setActiveVisiblePopup(false)
   }

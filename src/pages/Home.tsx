@@ -73,6 +73,7 @@ const Home: React.FC = () => {
       dispatch(
         setFilters({
           ...params,
+            // @ts-ignore
           sort,
         })
       )
